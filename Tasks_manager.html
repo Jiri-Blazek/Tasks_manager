@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Task Manager</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+    <style>
+        .panel-block {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start
+        }
+
+        .panel-block canvas {
+            min-height: 300px;
+            min-width: 500px;
+
+
+        }
+
+        .selectionBlock {
+            padding-left: 5rem;
+            padding-top: 0.25rem;
+            padding-bottom: 0.25rem;
+            display: flex;
+            align-items: center;
+            min-width: 18rem;
+
+        }
+
+        .selectionBlock>label {
+            min-width: 18rem;
+        }
+
+        .selectionBlock>button {
+            min-width: 10rem;
+        }
+
+        .selectionBlock>div>select {
+            max-width: none;
+            min-width: 18rem;
+
+        }
+
+        div>input {
+            display: flex;
+            min-width: 18rem;
+        }
+
+        #deleteRestartFiles {
+            min-width: 18rem;
+        }
+
+        .description {
+            margin-left: 1rem;
+            min-width: 60rem;
+        }
+    </style>
+</head>
+
+<body>
+    <article class="panel is-warning">
+        <p class="panel-heading" style="text-align: center;">Tasks Manager</p>
+        <p class="panel-tabs">
+
+            <a aria-controls="overview" class="is-active">Overview</a>
+            <a aria-controls="abaqus">Abaqus</a>
+            <a aria-controls="ls-dyna">LS-Dyna</a>
+            <a aria-controls="pamcrash">Pamcrash</a>
+        </p>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js">
+        </script>
+        <!------------------------------------------------------------------------------------------------>
+        <!------------------------------ bar chart ------------------------------------------------------->
+        <!------------------------------------------------------------------------------------------------>
+        <a id="overview" class="panel-block">
+
+            <table class="table is-bordered">
+                <tbody>
+
+                    <tr>
+                        <th class="is-link">Link th cell</th>
+                        <td>Two</td>
+                        <td class="is-link">Link td cell</td>
+                        <td>Four</td>
+                        <td>Five</td>
+                    </tr>
+                    <tr class="is-link">
+                        <th>Link row</th>
+                        <td>Two</td>
+                        <td>Three</td>
+                        <td>Four</td>
+                        <td>Five</td>
+                    </tr>
+
+                    <tr>
+                        <th class="is-primary">Primary th cell</th>
+                        <td>Two</td>
+                        <td class="is-primary">Primary td cell</td>
+                        <td>Four</td>
+                        <td>Five</td>
+                    </tr>
+                    <tr class="is-primary">
+                        <th>Primary row</th>
+                        <td>Two</td>
+                        <td>Three</td>
+                        <td>Four</td>
+                        <td>Five</td>
+                    </tr>
+
+                    <tr>
+                        <th class="is-info">Info th cell</th>
+                        <td>Two</td>
+                        <td class="is-info">Info td cell</td>
+                        <td>Four</td>
+                        <td>Five</td>
+                    </tr>
+                    <tr class="is-info">
+                        <th>Info row</th>
+                        <td>Two</td>
+                        <td>Three</td>
+                        <td>Four</td>
+                        <td>Five</td>
+                    </tr>
+
+                    <tr>
+                        <th class="is-success">Success th cell</th>
+                        <td>Two</td>
+                        <td class="is-success">Success td cell</td>
+                        <td>Four</td>
+                        <td>Five</td>
+                    </tr>
+                    <tr class="is-success">
+                        <th>Success row</th>
+                        <td>Two</td>
+                        <td>Three</td>
+                        <td>Four</td>
+                        <td>Five</td>
+                    </tr>
+
+                    <tr>
+                        <th class="is-warning">Warning th cell</th>
+                        <td>Two</td>
+                        <td class="is-warning">Warning td cell</td>
+                        <td>Four</td>
+                        <td>Five</td>
+                    </tr>
+                    <tr class="is-warning">
+                        <th>Warning row</th>
+                        <td>Two</td>
+                        <td>Three</td>
+                        <td>Four</td>
+                        <td>Five</td>
+                    </tr>
+
+                    <tr>
+                        <th class="is-danger">Danger th cell</th>
+                        <td>Two</td>
+                        <td class="is-danger">Danger td cell</td>
+                        <td>Four</td>
+                        <td>Five</td>
+                    </tr>
+                    <tr class="is-danger">
+                        <th>Danger row</th>
+                        <td>Two</td>
+                        <td>Three</td>
+                        <td>Four</td>
+                        <td>Five</td>
+                    </tr>
+
+                </tbody>
+            </table>
+
+            <div>
+                <canvas id="barChart"></canvas>
+            </div>
+            <script src="barChart.js"></script>
+            <script>
+                new Chart(barChart, barChart_config);
+            </script>
+            <!------------------------------------------------------------------------------------------------>
+            <!------------------------------ bar chart2 ------------------------------------------------------->
+            <!------------------------------------------------------------------------------------------------>
+
+            <div>
+                <canvas id="barChart2"></canvas>
+            </div>
+            <script src="barChart2.js"></script>
+            <script>
+                new Chart(barChart2, barChart2_config);
+            </script>
+            <div>
+                <canvas style="min-height:300px; min-width: 600px;" id="lineChart"></canvas>
+            </div>
+            <script src="lineChart.js"></script>
+            <script>
+                let b = new Chart(lineChart, lineChart_config);
+                //   b.resize();
+                //   b.update();
+            </script>
+
+        </a>
+        <!------------------------------------------------------------------------------------------------>
+        <!---------------------------------- Abaqus ------------------------------------------------------>
+        <!------------------------------------------------------------------------------------------------>
+
+
+        <a id="abaqus" class="panel-block is-hidden">
+
+
+            <!------------------------------ Select project name ----------------------------------->
+            <div class="selectionBlock">
+                <label for="project_name">Project Name<br> (Optional)</label>
+                <input id="project_name" class="input is-warning" type="text" placeholder="Project Name" />
+            </div>
+            <!------------------------------ Select input file ------------------------------------->
+            <div class="selectionBlock">
+                <label for="selectInputFile">Input File.</label>
+                <div class="select is-warning">
+                    <select id="selectInputFile">
+                    </select>
+                </div>
+                <!---
+                <div class="file is-warning" style="display: flex; align-items: center;  margin-left: 1rem;">
+                    <label class="file-label">
+                        <input class="file-input" type="file" name="resume" />
+                        <span class="file-cta">
+                            <span class="file-label"> Choose manually… </span>
+                        </span>
+                        <span class="file-name" style="padding-left: 1rem;"> No file chosen manually </span>
+                    </label>
+                </div>
+-->
+
+
+            </div>
+
+            <script>
+                InputFileList = ['my-test.json', 'users.py', '__pycache__', 'users_app.py', 'users_data.json'];
+                let selected_input_file = null;
+                InputFileList.forEach((el, index) => {
+                    const item = document.getElementById("selectInputFile");
+                    const newListItem = document.createElement("option");
+                    newListItem.textContent = el;
+                    if (index === 0) {
+                        selected_input_file = newListItem.value
+                    }
+                    item.appendChild(newListItem);
+                })
+                const inputFile = document.getElementById("selectInputFile");
+                inputFile.addEventListener("change", e => {
+                    selected_input_file = inputFile.value;
+                });
+            </script>
+
+
+            <!------------------------------ Select project name ----------------------------------->
+            <div class=" selectionBlock">
+                <label for="restart_name">Restart Name <br>(Optional)</label>
+                <input id="restart_name" class="input is-warning" type="text" placeholder="Restart File Name" />
+            </div>
+            <!------------------------------ Add parameter ----------------------------------->
+            <div class="selectionBlock">
+                <label for="parameter_name">Add Parameter <br>(Optional)</label>
+                <input id="parameter_name" class="input is-warning" type="text" placeholder="Add Parameter" />
+            </div>
+            <!------------------------------ Select Abaqus version  ------------------------------------->
+            <div class="selectionBlock">
+                <label for="selectAbaqusVersion">Abaqus Version</label>
+                <div class="select is-warning">
+                    <select id="selectAbaqusVersion">
+                        <option>Abaqus 2025</option>
+                        <option>Abaqus 2024</option>
+                        <option>Abaqus 2023</option>
+                        <option>Abaqus 2022</option>
+                    </select>
+                </div>
+            </div>
+            <script>
+                let selected_abaqus_version = 'Abaqus 2025'
+                const abaqusVersion = document.getElementById("selectAbaqusVersion");
+                abaqusVersion.addEventListener("change", e => {
+                    selected_abaqus_version = abaqusVersion.value;
+                });
+            </script>
+
+            <!------------------------------ Delete restart files  ------------------------------------->
+            <div class="control selectionBlock">
+                <label for="deleteRestartFiles">Delete Restart Files</label>
+                <div id="deleteRestartFiles" style="display: flex;justify-content: space-around;">
+                    <label class="radio">
+                        <input value="true" type="radio" name="foobar" />
+                        Yes
+                    </label>
+                    <label class="radio">
+                        <input value="false" type="radio" name="foobar" checked />
+                        No
+                    </label>
+                </div>
+            </div>
+
+            <script>
+                let deleteRestartFiles = false;
+                const delFiles = document.querySelectorAll("#deleteRestartFiles input");
+
+                delFiles.forEach(item => {
+                    item.addEventListener("change", e => {
+                        if (item.value === 'true')
+                            deleteRestartFiles = true;
+                        else (deleteRestartFiles = false);
+
+                    });
+                });
+            </script>
+
+            <!------------------------------ Add parameter ----------------------------------->
+            <div class="selectionBlock">
+                <label for="memory">Memory [GB]</label>
+                <input id="memory" class="input is-warning" type="text" placeholder="Default 8 GB" />
+                <div class="description">
+                    Max. <span style="color: blue;">220 GB</span> for <span style="color: blue;">Node 01, 02</span>;
+
+                    <span style="color: orange;"> 490 GB</span> for <span style="color: orange;">Node 03,
+                        04</span>;
+
+                    <span style="color: red;"> 670 GB</span> for <span style="color: red;">Node 08, 09</span>
+                </div>
+            </div>
+            <!------------------------------ Select Number of Kernels  ------------------------------------->
+            <div class="selectionBlock">
+                <label for="shared_kernels">Shared Kernels</label>
+                <input id="shared_kernels" class="input is-warning" type="text" placeholder="Default 13 kernels" />
+                <div class="description">
+                    From 1 to 255 kernels of processor according to free licences
+                </div>
+            </div>
+            <!------------------------------ Preferred nodes  ------------------------------------->
+            <div class="selectionBlock">
+                <label for="preferred_nodes">Preferred Nodes</label>
+                <div class="select is-warning">
+                    <select id="preferred_nodes">
+                        <option>Any</option>
+                        <option>prg-hpc-01</option>
+                        <option>prg-hpc-02 - for starccm</option>
+                        <option>prg-hpc-03</option>
+                        <option>prg-hpc-04</option>
+                        <option>prg-hpc-05</option>
+                        <option>prg-hpc-06</option>
+                        <option>prg-hpc-07</option>
+                        <option>prg-hpc-08</option>
+                        <option>prg-hpc-09 - for sw</option>
+
+                    </select>
+                </div>
+            </div>
+            <script>
+                let chosenNode = 'Any'
+                const preferred_nodes = document.getElementById("preferred_nodes");
+                preferred_nodes.addEventListener("change", e => {
+                    chosenNode = preferred_nodes.value;
+                });
+            </script>
+            <!------------------------------ Priority  ------------------------------------->
+            <div class="selectionBlock">
+                <label for="priority">Priority</label>
+                <div class="select is-warning">
+                    <select id="priority">
+                        <option value="3">3 - normal</option>
+                        <option value="1">1 - 20 minutes (syntax check)</option>
+                        <option value="2">2 - high</option>
+                        <option value="4">4 - 60 minutes</option>
+                        <option value="5">5 - start at 20:00</option>
+                        <option value="7">7 - on cfd node 02</option>
+                        <option value="8">8 - weekend / low priority</option>
+                        <option value="9">9 - huge</option>
+                    </select>
+                </div>
+            </div>
+
+            <script>
+                let chosenPriority = '3'
+                const priority = document.getElementById("priority");
+                priority.addEventListener("change", e => {
+                    chosenPriority = priority.value;
+                });
+            </script>
+
+            <!------------------------------ Begin time  ------------------------------------->
+            <div class="selectionBlock">
+                <label for="begin_time">Begin Time</label>
+                <input id="begin_time" class="input is-warning" type="text" placeholder="Default now" />
+                <div class="description">
+                    Now or time HH:MM, for example 5:00; or as a delay: now+36hour
+                </div>
+            </div>
+            <!------------------------------ Max. estimated time  ------------------------------------->
+            <div class="selectionBlock">
+                <label for="estimated_time">Max. Estimated Time</label>
+                <input id="estimated_time" class="input is-warning" type="text" placeholder="Default 8 hours" />
+                <div class="description">
+                    After this time the job <span style="color: red;">will be killed!</span>
+                </div>
+            </div>
+            <!------------------------------------------- Submit  --------------------------------------->
+            <div class="buttons selectionBlock">
+                <button class="button is-warning">Send Job to Queue</button>
+            </div>
+
+
+
+
+        </a>
+        <!------------------------------------------------------------------------------------------------>
+        <!------------------------------ doughnut chart -------------------------------------------------->
+        <!------------------------------------------------------------------------------------------------>
+        <a id="ls-dyna" class="panel-block is-hidden">
+            <div>
+                <canvas style="min-height:600px; min-width: 600px;" id="doughnutChart"></canvas>
+            </div>
+            <script src="doughnutChart.js"></script>
+
+            <script>
+                new Chart(doughnutChart, doughnutChart_config);
+            </script>
+        </a>
+        <!------------------------------------------------------------------------------------------------>
+        <!------------------------------ polar chart2 ---------------------------------------------------->
+        <!------------------------------------------------------------------------------------------------>
+        <a id="pamcrash" class="panel-block is-hidden">
+            <div>
+                <canvas style="min-height:600px; min-width: 600px;" id="polarChart"></canvas>
+            </div>
+            <script src="polarChart.js"></script>
+            <script>
+                new Chart(polarChart, polarChart_config);
+            </script>
+        </a>
+        <!------------------------------------------------------------------------------------------------>
+        <!------------------------------------------------------------------------------------------------>
+        <!------------------------------------------------------------------------------------------------>
+
+
+
+    </article>
+    <script>
+
+        class Tab {
+            constructor(el) {
+                this.el = el;
+                const contentId = el.getAttribute('aria-controls');
+                this.content = document.getElementById(contentId);
+                //                this.charts = document.querySelectorAll(`#${contentId}  canvas`);
+
+            }
+            activate() {
+                this.el.classList.add('is-active');
+                this.content.classList.remove('is-hidden');
+            };
+            deactivate() {
+                this.el.classList.remove('is-active');
+                this.content.classList.add('is-hidden');
+            };
+            //            drawGraph() {
+            //                return this.charts;
+            //            }
+
+        };
+
+        const allItems = document.querySelectorAll('.panel-tabs> a');
+        let activeTab = null;
+
+        allItems.forEach((item, index) => {
+            const tab = new Tab(item);
+            if (!index) activeTab = tab;
+            item.addEventListener('click', e => {
+                activeTab.deactivate();
+                tab.activate();
+                activeTab = tab;
+
+                /*                 let charts = tab.drawGraph();
+                                   charts.forEach((el, index) => {
+                                   let chartConfig = `${el.id}_config`;
+                                   let chart_ID = `${el.id}`;
+                
+                                    const MyChart = new Chart(chart_ID, chartConfig);
+                                })
+                 */
+            });
+
+        })
+
+    </script>
+
+</body>
+
+</html>

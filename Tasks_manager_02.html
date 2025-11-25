@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Task submit</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+    <style>
+        .panel-block {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start
+        }
+
+        .panel-block canvas {
+            min-height: 300px;
+            min-width: 500px;
+
+
+        }
+
+        .selectionBlock {
+            padding-left: 5rem;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            min-width: 20rem;
+
+        }
+
+        .selectionBlock>label {
+            min-width: 15rem;
+        }
+
+        .selectionBlock>div>select {
+            max-width: none;
+            min-width: 25rem;
+
+        }
+
+        input {
+            display: flex;
+            min-width: 15rem;
+        }
+    </style>
+</head>
+
+<body>
+    <article class="panel is-warning">
+        <p class="panel-heading" style="text-align: center;">Tasks manager</p>
+        <p class="panel-tabs">
+            <a aria-controls="overview" class="is-active">Overview</a>
+            <a aria-controls="abaqus">Abaqus</a>
+            <a aria-controls="ls-dyna">LS-Dyna</a>
+            <a aria-controls="pamcrash">Pamcrash</a>
+        </p>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js">
+        </script>
+        <!------------------------------------------------------------------------------------------------>
+        <!------------------------------ bar chart ------------------------------------------------------->
+        <!------------------------------------------------------------------------------------------------>
+        <a id="overview" class="panel-block">
+            <div>
+                <canvas id="barChart"></canvas>
+            </div>
+            <script src="barChart.js"></script>
+            <script>
+                new Chart(barChart, barChart_config);
+            </script>
+            <!------------------------------------------------------------------------------------------------>
+            <!------------------------------ bar chart2 ------------------------------------------------------->
+            <!------------------------------------------------------------------------------------------------>
+
+            <div>
+                <canvas id="barChart2"></canvas>
+            </div>
+            <script src="barChart2.js"></script>
+            <script>
+                new Chart(barChart2, barChart2_config);
+            </script>
+
+        </a>
+        <!------------------------------------------------------------------------------------------------>
+        <!------------------------------ line chart ------------------------------------------------------>
+        <!------------------------------------------------------------------------------------------------>
+
+
+        <a id="abaqus" class="panel-block is-hidden">
+            <div id="main">
+                <!------------------------------ Select project name ----------------------------------->
+                <div class="selectionBlock">
+                    <label for="project_name">Project Name<br> (Optional)</label>
+                    <input id="project_name" class="input is-warning" type="text" placeholder="Project name" />
+                </div>
+                <!------------------------------ Select input file ------------------------------------->
+                <div class="selectionBlock">
+                    <label for="selectInputFile">Input File.</label>
+                    <div class="select is-warning">
+                        <select id="selectInputFile">
+                        </select>
+                    </div>
+                </div>
+                <!------------------------------ Seelect project name ----------------------------------->
+                <div class="selectionBlock">
+                    <label for="project_name">Restart Name <br>(Optional)</label>
+                    <input id="restart_name" class="input is-warning" type="text" placeholder="Project name" />
+                </div>
+            </div>
+            <div>
+                <canvas style="min-height:300px; min-width: 600px;" id="lineChart"></canvas>
+            </div>
+            <script src="lineChart.js"></script>
+            <script>
+                let b = new Chart(lineChart, lineChart_config);
+                //   b.resize();
+                //   b.update();
+            </script>
+        </a>
+        <script>
+            InputFileList = ['my-test.json', 'users.py', '__pycache__', 'users_app.py', 'users_data.json'];
+
+            InputFileList.forEach(el => {
+                const item = document.getElementById("selectInputFile");
+                const newListItem = document.createElement("option");
+                newListItem.textContent = el;
+                item.appendChild(newListItem);
+            })
+        </script>
+        <!------------------------------------------------------------------------------------------------>
+        <!------------------------------ doughnut chart -------------------------------------------------->
+        <!------------------------------------------------------------------------------------------------>
+        <a id="ls-dyna" class="panel-block is-hidden">
+            <div>
+                <canvas style="min-height:600px; min-width: 600px;" id="doughnutChart"></canvas>
+            </div>
+            <script src="doughnutChart.js"></script>
+
+            <script>
+                new Chart(doughnutChart, doughnutChart_config);
+            </script>
+        </a>
+        <!------------------------------------------------------------------------------------------------>
+        <!------------------------------ polar chart2 ---------------------------------------------------->
+        <!------------------------------------------------------------------------------------------------>
+        <a id="pamcrash" class="panel-block is-hidden">
+            <div>
+                <canvas style="min-height:600px; min-width: 600px;" id="polarChart"></canvas>
+            </div>
+            <script src="polarChart.js"></script>
+            <script>
+                new Chart(polarChart, polarChart_config);
+            </script>
+        </a>
+        <!------------------------------------------------------------------------------------------------>
+        <!------------------------------------------------------------------------------------------------>
+        <!------------------------------------------------------------------------------------------------>
+
+
+
+    </article>
+    <script>
+
+        class Tab {
+            constructor(el) {
+                this.el = el;
+                const contentId = el.getAttribute('aria-controls');
+                this.content = document.getElementById(contentId);
+                //                this.charts = document.querySelectorAll(`#${contentId}  canvas`);
+
+            }
+            activate() {
+                this.el.classList.add('is-active');
+                this.content.classList.remove('is-hidden');
+            };
+            deactivate() {
+                this.el.classList.remove('is-active');
+                this.content.classList.add('is-hidden');
+            };
+            //            drawGraph() {
+            //                return this.charts;
+            //            }
+
+        };
+
+        const allItems = document.querySelectorAll('.panel-tabs> a');
+        let activeTab = null;
+
+        allItems.forEach((item, index) => {
+            const tab = new Tab(item);
+            if (!index) activeTab = tab;
+            item.addEventListener('click', e => {
+                activeTab.deactivate();
+                tab.activate();
+                activeTab = tab;
+
+                /*                 let charts = tab.drawGraph();
+                                   charts.forEach((el, index) => {
+                                   let chartConfig = `${el.id}_config`;
+                                   let chart_ID = `${el.id}`;
+                
+                                    const MyChart = new Chart(chart_ID, chartConfig);
+                                })
+                 */
+            });
+
+        })
+
+    </script>
+
+</body>
+
+</html>

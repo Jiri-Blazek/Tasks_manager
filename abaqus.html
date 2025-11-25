@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+    <style>
+        .panel-block {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start
+        }
+
+        .panel-block canvas {
+            min-height: 300px;
+            min-width: 500px;
+
+
+        }
+
+        .selectionBlock {
+            padding-left: 5rem;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            min-width: 20rem;
+
+        }
+
+        .selectionBlock>label {
+            min-width: 15rem;
+        }
+
+        .selectionBlock>div>select {
+            max-width: none;
+            min-width: 25rem;
+
+        }
+
+        input {
+            display: flex;
+            min-width: 15rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main">
+        <!------------------------------ Select project name ----------------------------------->
+        <div class="selectionBlock">
+            <label for="project_name">Project Name<br> (Optional)</label>
+            <input id="project_name" class="input is-warning" type="text" placeholder="Project name" />
+        </div>
+        <!------------------------------ Select input file ------------------------------------->
+        <div class="selectionBlock">
+            <label for="selectInputFile">Input File.</label>
+            <div class="select is-warning">
+                <select id="selectInputFile">
+                </select>
+            </div>
+        </div>
+        <!------------------------------ Seelect project name ----------------------------------->
+        <div class="selectionBlock">
+            <label for="project_name">Restart Name <br>(Optional)</label>
+            <input id="restart_name" class="input is-warning" type="text" placeholder="Project name" />
+        </div>
+    </div>
+    <div>
+        <canvas style="min-height:300px; min-width: 600px;" id="lineChart"></canvas>
+    </div>
+    <script src="lineChart.js"></script>
+    <script>
+        let b = new Chart(lineChart, lineChart_config);
+        //   b.resize();
+        //   b.update();
+    </script>
+    <script>
+        InputFileList = ['my-test.json', 'users.py', '__pycache__', 'users_app.py', 'users_data.json'];
+
+        InputFileList.forEach(el => {
+            const item = document.getElementById("selectInputFile");
+            const newListItem = document.createElement("option");
+            newListItem.textContent = el;
+            item.appendChild(newListItem);
+        })
+    </script>
+</body>
+
+</html>
