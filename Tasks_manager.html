@@ -57,6 +57,18 @@
             margin-left: 1rem;
             min-width: 60rem;
         }
+
+
+        #submit_info {
+
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 999;
+
+
+        }
     </style>
 </head>
 
@@ -207,19 +219,22 @@
         <!------------------------------------------------------------------------------------------------>
 
 
-        <a id="abaqus" class="panel-block is-hidden">
+        <div id="abaqus" class="panel-block is-hidden">
 
 
             <!------------------------------ Select project name ----------------------------------->
             <div class="selectionBlock">
                 <label for="project_name">Project Name<br> (Optional)</label>
-                <input id="project_name" class="input is-warning" type="text" placeholder="Project Name" />
+                <input id="project_name" class="input is-warning, submit_value" type="text"
+                    placeholder="Project Name" />
             </div>
+
+
             <!------------------------------ Select input file ------------------------------------->
             <div class="selectionBlock">
                 <label for="selectInputFile">Input File.</label>
                 <div class="select is-warning">
-                    <select id="selectInputFile">
+                    <select id="selectInputFile" class="submit_value">
                     </select>
                 </div>
                 <!---
@@ -233,44 +248,26 @@
                     </label>
                 </div>
 -->
-
-
             </div>
-
-            <script>
-                InputFileList = ['my-test.json', 'users.py', '__pycache__', 'users_app.py', 'users_data.json'];
-                let selected_input_file = null;
-                InputFileList.forEach((el, index) => {
-                    const item = document.getElementById("selectInputFile");
-                    const newListItem = document.createElement("option");
-                    newListItem.textContent = el;
-                    if (index === 0) {
-                        selected_input_file = newListItem.value
-                    }
-                    item.appendChild(newListItem);
-                })
-                const inputFile = document.getElementById("selectInputFile");
-                inputFile.addEventListener("change", e => {
-                    selected_input_file = inputFile.value;
-                });
-            </script>
-
-
-            <!------------------------------ Select project name ----------------------------------->
+            <!------------------------------ Select restart name ----------------------------------->
             <div class=" selectionBlock">
                 <label for="restart_name">Restart Name <br>(Optional)</label>
-                <input id="restart_name" class="input is-warning" type="text" placeholder="Restart File Name" />
+                <input id="restart_name" class="input is-warning, submit_value" type="text"
+                    placeholder="Restart File Name" />
             </div>
+
             <!------------------------------ Add parameter ----------------------------------->
             <div class="selectionBlock">
                 <label for="parameter_name">Add Parameter <br>(Optional)</label>
-                <input id="parameter_name" class="input is-warning" type="text" placeholder="Add Parameter" />
+                <input id="parameter_name" class="input is-warning, submit_value" type="text"
+                    placeholder="Add Parameter" />
             </div>
+
             <!------------------------------ Select Abaqus version  ------------------------------------->
             <div class="selectionBlock">
                 <label for="selectAbaqusVersion">Abaqus Version</label>
                 <div class="select is-warning">
-                    <select id="selectAbaqusVersion">
+                    <select id="selectAbaqusVersion" class="submit_value">
                         <option>Abaqus 2025</option>
                         <option>Abaqus 2024</option>
                         <option>Abaqus 2023</option>
@@ -278,16 +275,10 @@
                     </select>
                 </div>
             </div>
-            <script>
-                let selected_abaqus_version = 'Abaqus 2025'
-                const abaqusVersion = document.getElementById("selectAbaqusVersion");
-                abaqusVersion.addEventListener("change", e => {
-                    selected_abaqus_version = abaqusVersion.value;
-                });
-            </script>
 
             <!------------------------------ Delete restart files  ------------------------------------->
             <div class="control selectionBlock">
+
                 <label for="deleteRestartFiles">Delete Restart Files</label>
                 <div id="deleteRestartFiles" style="display: flex;justify-content: space-around;">
                     <label class="radio">
@@ -295,30 +286,17 @@
                         Yes
                     </label>
                     <label class="radio">
-                        <input value="false" type="radio" name="foobar" checked />
+                        <input type="radio" name="foobar" checked />
                         No
                     </label>
                 </div>
             </div>
 
-            <script>
-                let deleteRestartFiles = false;
-                const delFiles = document.querySelectorAll("#deleteRestartFiles input");
-
-                delFiles.forEach(item => {
-                    item.addEventListener("change", e => {
-                        if (item.value === 'true')
-                            deleteRestartFiles = true;
-                        else (deleteRestartFiles = false);
-
-                    });
-                });
-            </script>
-
-            <!------------------------------ Add parameter ----------------------------------->
+            <!------------------------------ Memory ----------------------------------->
             <div class="selectionBlock">
                 <label for="memory">Memory [GB]</label>
-                <input id="memory" class="input is-warning" type="text" placeholder="Default 8 GB" />
+                <input id="memory" class="input is-warning, submit_value, number" type="text" value="8"
+                    placeholder="Default 8 GB" />
                 <div class="description">
                     Max. <span style="color: blue;">220 GB</span> for <span style="color: blue;">Node 01, 02</span>;
 
@@ -330,8 +308,9 @@
             </div>
             <!------------------------------ Select Number of Kernels  ------------------------------------->
             <div class="selectionBlock">
-                <label for="shared_kernels">Shared Kernels</label>
-                <input id="shared_kernels" class="input is-warning" type="text" placeholder="Default 13 kernels" />
+                <label for="shared kernels">Shared Kernels</label>
+                <input id="shared kernels" class="input is-warning, submit_value, number" type="text" value="13"
+                    placeholder="Default 13 kernels" />
                 <div class="description">
                     From 1 to 255 kernels of processor according to free licences
                 </div>
@@ -340,7 +319,7 @@
             <div class="selectionBlock">
                 <label for="preferred_nodes">Preferred Nodes</label>
                 <div class="select is-warning">
-                    <select id="preferred_nodes">
+                    <select id="preferred_nodes" class="submit_value">
                         <option>Any</option>
                         <option>prg-hpc-01</option>
                         <option>prg-hpc-02 - for starccm</option>
@@ -355,18 +334,12 @@
                     </select>
                 </div>
             </div>
-            <script>
-                let chosenNode = 'Any'
-                const preferred_nodes = document.getElementById("preferred_nodes");
-                preferred_nodes.addEventListener("change", e => {
-                    chosenNode = preferred_nodes.value;
-                });
-            </script>
+
             <!------------------------------ Priority  ------------------------------------->
             <div class="selectionBlock">
                 <label for="priority">Priority</label>
                 <div class="select is-warning">
-                    <select id="priority">
+                    <select id="priority" class="submit_value">
                         <option value="3">3 - normal</option>
                         <option value="1">1 - 20 minutes (syntax check)</option>
                         <option value="2">2 - high</option>
@@ -379,39 +352,151 @@
                 </div>
             </div>
 
-            <script>
-                let chosenPriority = '3'
-                const priority = document.getElementById("priority");
-                priority.addEventListener("change", e => {
-                    chosenPriority = priority.value;
-                });
-            </script>
-
             <!------------------------------ Begin time  ------------------------------------->
             <div class="selectionBlock">
-                <label for="begin_time">Begin Time</label>
-                <input id="begin_time" class="input is-warning" type="text" placeholder="Default now" />
+                <label for="begin time">Begin Time</label>
+                <input id="begin time" class="input is-warning, submit_value" value="now" type="text"
+                    placeholder="Default now" />
                 <div class="description">
                     Now or time HH:MM, for example 5:00; or as a delay: now+36hour
                 </div>
             </div>
             <!------------------------------ Max. estimated time  ------------------------------------->
             <div class="selectionBlock">
-                <label for="estimated_time">Max. Estimated Time</label>
-                <input id="estimated_time" class="input is-warning" type="text" placeholder="Default 8 hours" />
+                <label for="max. estimated time">Max. Estimated Time [h]</label>
+                <input id="max. estimated time" class="input is-warning, submit_value, number" value="8" type="text"
+                    placeholder="Default 8 hours" />
                 <div class="description">
                     After this time the job <span style="color: red;">will be killed!</span>
                 </div>
             </div>
             <!------------------------------------------- Submit  --------------------------------------->
             <div class="buttons selectionBlock">
-                <button class="button is-warning">Send Job to Queue</button>
+                <button id="submit" class="button is-warning">Submit Job to Queue</button>
             </div>
+            <!------------------------------------------- Submit info  --------------------------------------->
+            <article class="message is-warning is-hidden" id="submit_info">
+                <div class="message-header">
+                    <p>Submit Info</p>
+                </div>
+                <div class="message-body">
+                    <div id="submit_info_content">
+
+                    </div>
+
+                    <div class="buttons" style="display: flex; justify-content: center;padding-top: 2rem; ">
+                        <button class="button is-warning" id="close_button_info">OK</button>
+                    </div>
+                </div>
+            </article>
+            <!---------------------------------------------------------------------------------->
+            <!------------------------------------JavaScript  ---------------------------------->
+            <!---------------------------------------------------------------------------------->
+
+            <script>
+                // list of files - in future from Python
+                InputFileList = ['my-test.json', 'users.py', '__pycache__', 'users_app.py', 'users_data.json'];
+
+
+
+                //---------------check button for deleting restart files------------------------------//
+                let deleteRestartFiles = false;
+                const check_buttons = document.querySelectorAll("#deleteRestartFiles input");
+                check_buttons.forEach(item => {
+                    item.addEventListener("change", e => {
+                        if (item.value === 'true')
+                            deleteRestartFiles = true;
+                        else (deleteRestartFiles = false);
+                    });
+                });
+
+
+                //-------------------- Creation of filelist of potencial input files ---------------//
+                let selected_input_file = null;
+                InputFileList.forEach((el, index) => {
+                    const item = document.getElementById("selectInputFile");
+                    const newListItem = document.createElement("option");
+                    newListItem.textContent = el;
+                    if (index === 0) {
+                        selected_input_file = newListItem.value
+                    }
+                    item.appendChild(newListItem);
+                })
+                const inputFile = document.getElementById("selectInputFile");
+                inputFile.addEventListener("change", e => {
+                    selected_input_file = inputFile.value;
+                });
+
+
+                // --------------------- Creation of dictionary for submit parameters------------------///
+
+                let submit_values_list = {};
+                const submit = document.getElementById("submit");
+                const input_list = document.querySelectorAll('.submit_value');
+                const values_for_check = document.querySelectorAll('.number');
+                const submit_info = document.getElementById("submit_info");
+                const close_button_info = document.getElementById("close_button_info");
+                const submit_info_content = document.getElementById('submit_info_content')
+                //const keys_for_input_check = ['estimated_time', 'memory', 'shared_kernels']
+
+
+                submit.addEventListener("click", e => {
+                    fill_input_values();
+                    submit_values_list.deleteRestartFiles = deleteRestartFiles;
+                    number = check_values();
+                    show_submit_info(number);
+                    hide_submit_info()
+                });
+
+                function check_values() {
+                    error_text = '';
+                    text = '';
+                    errors_number = 0;
+                    values_for_check.forEach(item => {
+                        if (item.value
+                            == "" || isNaN(Number(item.value))) {
+                            errors_number += 1;
+                            error_text = error_text + "Error: Incorect input for " + item.id + ". Must be number."
+                        }
+                    })
+                    if (errors_number >= 0) {
+                        text = error_text;
+                    }
+                    else {
+                        text = 'Task was submited.'
+                    }
+                    return text
+                };
 
 
 
 
-        </a>
+                function show_submit_info(text) {
+                    submit_info.classList.remove('is-hidden');
+                    const newMessage = document.createElement('p');
+                    newMessage.textContent = text;
+                    submit_info_content.appendChild(newMessage);
+                }
+
+                function hide_submit_info() {
+                    close_button_info.addEventListener("click", e => {
+                        submit_info.classList.add('is-hidden');
+                        submit_info_content.innerHTML = '';
+                    })
+                };
+
+
+                function fill_input_values() {
+                    input_list.forEach(item => {
+                        const key = item.id;
+                        const value = item.value;
+                        submit_values_list[key] = value;
+                    });
+
+                }
+
+            </script>
+        </div>
         <!------------------------------------------------------------------------------------------------>
         <!------------------------------ doughnut chart -------------------------------------------------->
         <!------------------------------------------------------------------------------------------------>
@@ -451,7 +536,7 @@
                 this.el = el;
                 const contentId = el.getAttribute('aria-controls');
                 this.content = document.getElementById(contentId);
-                //                this.charts = document.querySelectorAll(`#${contentId}  canvas`);
+
 
             }
             activate() {
@@ -462,9 +547,6 @@
                 this.el.classList.remove('is-active');
                 this.content.classList.add('is-hidden');
             };
-            //            drawGraph() {
-            //                return this.charts;
-            //            }
 
         };
 
@@ -478,15 +560,6 @@
                 activeTab.deactivate();
                 tab.activate();
                 activeTab = tab;
-
-                /*                 let charts = tab.drawGraph();
-                                   charts.forEach((el, index) => {
-                                   let chartConfig = `${el.id}_config`;
-                                   let chart_ID = `${el.id}`;
-                
-                                    const MyChart = new Chart(chart_ID, chartConfig);
-                                })
-                 */
             });
 
         })
