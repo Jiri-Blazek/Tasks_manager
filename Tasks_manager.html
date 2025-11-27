@@ -443,27 +443,26 @@
                 submit.addEventListener("click", e => {
                     fill_input_values();
                     submit_values_list.deleteRestartFiles = deleteRestartFiles;
-                    number = check_values();
-                    show_submit_info(number);
+                    message_to_show = check_values();
+                    show_submit_info(message_to_show);
                     hide_submit_info()
                 });
 
                 function check_values() {
-                    error_text = '';
-                    text = '';
-                    errors_number = 0;
-                    values_for_check.forEach(item => {
+                    errors = [];
+                    values_for_check.forEach((item, index) => {
                         if (item.value
                             == "" || isNaN(Number(item.value))) {
-                            errors_number += 1;
-                            error_text = error_text + "Error: Incorect input for " + item.id + ". Must be number."
+                            errors[index] = item.id;
                         }
                     })
-                    if (errors_number >= 0) {
-                        text = error_text;
+
+                    if (errors.length > 0) {
+                        errors.unshift("Error, following inputs must be numbers:");
+                        text = errors;
                     }
                     else {
-                        text = 'Task was submited.'
+                        text = ['Task was submited.']
                     }
                     return text
                 };
@@ -473,9 +472,12 @@
 
                 function show_submit_info(text) {
                     submit_info.classList.remove('is-hidden');
-                    const newMessage = document.createElement('p');
-                    newMessage.textContent = text;
-                    submit_info_content.appendChild(newMessage);
+                    text.forEach(item => {
+                        const newMessage = document.createElement('p');
+                        newMessage.textContent = item;
+                        submit_info_content.appendChild(newMessage);
+                    })
+
                 }
 
                 function hide_submit_info() {
