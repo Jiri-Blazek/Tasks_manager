@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Task submit</title>
+    <title>Task Manager</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
     <style>
         .panel-block {
@@ -22,35 +22,70 @@
 
         .selectionBlock {
             padding-left: 5rem;
-            padding-top: 1rem;
-            padding-bottom: 1rem;
+            padding-top: 0.25rem;
+            padding-bottom: 0.25rem;
             display: flex;
             align-items: center;
-            min-width: 20rem;
+            min-width: 18rem;
 
         }
 
         .selectionBlock>label {
-            min-width: 15rem;
+            min-width: 18rem;
+        }
+
+        .selectionBlock>button {
+            min-width: 10rem;
         }
 
         .selectionBlock>div>select {
             max-width: none;
-            min-width: 25rem;
+            min-width: 18rem;
 
         }
 
-        input {
+        div>input {
             display: flex;
-            min-width: 15rem;
+            min-width: 18rem;
+        }
+
+        #deleteRestartFiles {
+            min-width: 18rem;
+        }
+
+        .description {
+            margin-left: 1rem;
+            min-width: 60rem;
+        }
+
+
+        #submit_info {
+
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 999;
+
+
+        }
+
+        .table-button {
+            background-color: lightgrey;
+        }
+
+        #overview {
+            display: flex;
+            align-items: center;
         }
     </style>
 </head>
 
 <body>
     <article class="panel is-warning">
-        <p class="panel-heading" style="text-align: center;">Tasks manager</p>
+        <p class="panel-heading" style="text-align: center;">Tasks Manager</p>
         <p class="panel-tabs">
+
             <a aria-controls="overview" class="is-active">Overview</a>
             <a aria-controls="abaqus">Abaqus</a>
             <a aria-controls="ls-dyna">LS-Dyna</a>
@@ -58,10 +93,157 @@
         </p>
         <script src="https://cdn.jsdelivr.net/npm/chart.js">
         </script>
+
         <!------------------------------------------------------------------------------------------------>
-        <!------------------------------ bar chart ------------------------------------------------------->
+        <!------------------------------ Table with running jobs------------------------------------------>
         <!------------------------------------------------------------------------------------------------>
-        <a id="overview" class="panel-block">
+
+        <div id="overview" class="panel-block">
+
+
+
+            <table class="table is-bordered">
+                <tbody>
+
+                    <tr>
+                        <th class="is-warning"></th>
+                        <th class="is-warning"></th>
+                        <th class="is-warning">Job ID</th>
+                        <td class="is-warning">Name</td>
+                        <td class="is-warning">User</td>
+                        <td class="is-warning">State</td>
+                        <td class="is-warning">Priority</td>
+                        <td class="is-warning">Running time</td>
+                        <td class="is-warning">Start time</td>
+                        <td class="is-warning">Time limit</td>
+                        <td class="is-warning">CPUs</td>
+                        <td class="is-warning">Node</td>
+                        <td class="is-warning">Min. memory</td>
+                        <td class="is-warning">Nodelist</td>
+                    </tr>
+
+                    <tr>
+                        <td><button class="button is-small table-button">Get dir.</button></td>
+                        <td><button class="button is-small table-button">Kill</button></td>
+                        <td>1921</td>
+                        <td>Crash-front</td>
+                        <td>Jiri</td>
+                        <td>Running</td>
+                        <td>3</td>
+                        <td>0:25</td>
+                        <td>2025-11-27-16:25</td>
+                        <td>15:00:00</td>
+                        <td>16</td>
+                        <td>1</td>
+                        <td>250</td>
+                        <td>prg-hpc-01</td>
+                    </tr>
+
+
+                </tbody>
+            </table>
+
+
+            <div style="margin-bottom: 15px;">
+                <label>Role:</label>
+                <select id="roleFilter">
+                    <option value="">Vše</option>
+                    <option value="admin">Admin</option>
+                    <option value="user">User</option>
+                    <option value="guest">Guest</option>
+                </select>
+
+                <label style="margin-left: 20px;">
+                    <input type="checkbox" id="activeFilter"> Pouze aktivní
+                </label>
+            </div>
+
+            <table id="userTable" border="1">
+                <thead>
+                    <tr>
+                        <th>Jméno</th>
+                        <th>Role</th>
+                        <th>Aktivní</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Jan</td>
+                        <td>admin</td>
+                        <td>true</td>
+                    </tr>
+                    <tr>
+                        <td>Petr</td>
+                        <td>user</td>
+                        <td>false</td>
+                    </tr>
+                    <tr>
+                        <td>Alena</td>
+                        <td>guest</td>
+                        <td>true</td>
+                    </tr>
+                    <tr>
+                        <td>Lucie</td>
+                        <td>user</td>
+                        <td>true</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!------------------------------------------------------------------------------------------------>
+            <!------------------------------  active table---------------------------------------------------->
+            <!------------------------------------------------------------------------------------------------>
+
+            <script>
+                const roleFilter = document.getElementById("roleFilter");
+                const activeFilter = document.getElementById("activeFilter");
+                const table = document.getElementById("userTable");
+                const rows = table.getElementsByTagName("tr");
+
+                function filterTable() {
+                    const roleValue = roleFilter.value.toLowerCase();
+                    const activeChecked = activeFilter.checked;
+
+                    for (let i = 1; i < rows.length; i++) {
+                        const cells = rows[i].getElementsByTagName("td");
+
+                        const role = cells[1].innerText.toLowerCase();
+                        const active = cells[2].innerText.toLowerCase() === "true";
+
+                        let visible = true;
+
+                        // filtr role
+                        if (roleValue && role !== roleValue) {
+                            visible = false;
+                        }
+
+                        // filtr aktivních
+                        if (activeChecked && !active) {
+                            visible = false;
+                        }
+
+                        rows[i].style.display = visible ? "" : "none";
+                    }
+                }
+
+                roleFilter.addEventListener("change", filterTable);
+                activeFilter.addEventListener("change", filterTable);
+            </script>
+
+
+
+            <!------------------------------------------------------------------------------------------------>
+            <!------------------------------  Memory chart---------------------------------------------------->
+            <!------------------------------------------------------------------------------------------------>
+
+            <div>
+                <canvas id="memory_chart"></canvas>
+            </div>
+            <script src="memory_chart.js"></script>
+            <script>
+                new Chart(memory_chart, memory_chart_config);
+            </script>
+
             <div>
                 <canvas id="barChart"></canvas>
             </div>
@@ -69,45 +251,7 @@
             <script>
                 new Chart(barChart, barChart_config);
             </script>
-            <!------------------------------------------------------------------------------------------------>
-            <!------------------------------ bar chart2 ------------------------------------------------------->
-            <!------------------------------------------------------------------------------------------------>
 
-            <div>
-                <canvas id="barChart2"></canvas>
-            </div>
-            <script src="barChart2.js"></script>
-            <script>
-                new Chart(barChart2, barChart2_config);
-            </script>
-
-        </a>
-        <!------------------------------------------------------------------------------------------------>
-        <!------------------------------ line chart ------------------------------------------------------>
-        <!------------------------------------------------------------------------------------------------>
-
-
-        <a id="abaqus" class="panel-block is-hidden">
-            <div id="main">
-                <!------------------------------ Select project name ----------------------------------->
-                <div class="selectionBlock">
-                    <label for="project_name">Project Name<br> (Optional)</label>
-                    <input id="project_name" class="input is-warning" type="text" placeholder="Project name" />
-                </div>
-                <!------------------------------ Select input file ------------------------------------->
-                <div class="selectionBlock">
-                    <label for="selectInputFile">Input File.</label>
-                    <div class="select is-warning">
-                        <select id="selectInputFile">
-                        </select>
-                    </div>
-                </div>
-                <!------------------------------ Seelect project name ----------------------------------->
-                <div class="selectionBlock">
-                    <label for="project_name">Restart Name <br>(Optional)</label>
-                    <input id="restart_name" class="input is-warning" type="text" placeholder="Project name" />
-                </div>
-            </div>
             <div>
                 <canvas style="min-height:300px; min-width: 600px;" id="lineChart"></canvas>
             </div>
@@ -117,21 +261,297 @@
                 //   b.resize();
                 //   b.update();
             </script>
-        </a>
-        <script>
-            InputFileList = ['my-test.json', 'users.py', '__pycache__', 'users_app.py', 'users_data.json'];
 
-            InputFileList.forEach(el => {
-                const item = document.getElementById("selectInputFile");
-                const newListItem = document.createElement("option");
-                newListItem.textContent = el;
-                item.appendChild(newListItem);
-            })
-        </script>
+        </div>
+        <!------------------------------------------------------------------------------------------------>
+        <!---------------------------------- Abaqus ------------------------------------------------------>
+        <!------------------------------------------------------------------------------------------------>
+
+
+        <div id="abaqus" class="panel-block is-hidden">
+
+
+            <!------------------------------ Select project name ----------------------------------->
+            <div class="selectionBlock">
+                <label for="project_name">Project Name<br> (Optional)</label>
+                <input id="project_name" class="input is-warning, submit_value" type="text"
+                    placeholder="Project Name" />
+            </div>
+
+
+            <!------------------------------ Select input file ------------------------------------->
+            <div class="selectionBlock">
+                <label for="selectInputFile">Input File.</label>
+                <div class="select is-warning">
+                    <select id="selectInputFile" class="submit_value">
+                    </select>
+                </div>
+                <!---
+                <div class="file is-warning" style="display: flex; align-items: center;  margin-left: 1rem;">
+                    <label class="file-label">
+                        <input class="file-input" type="file" name="resume" />
+                        <span class="file-cta">
+                            <span class="file-label"> Choose manually… </span>
+                        </span>
+                        <span class="file-name" style="padding-left: 1rem;"> No file chosen manually </span>
+                    </label>
+                </div>
+-->
+            </div>
+            <!------------------------------ Select restart name ----------------------------------->
+            <div class=" selectionBlock">
+                <label for="restart_name">Restart Name <br>(Optional)</label>
+                <input id="restart_name" class="input is-warning, submit_value" type="text"
+                    placeholder="Restart File Name" />
+            </div>
+
+            <!------------------------------ Add parameter ----------------------------------->
+            <div class="selectionBlock">
+                <label for="parameter_name">Add Parameter <br>(Optional)</label>
+                <input id="parameter_name" class="input is-warning, submit_value" type="text"
+                    placeholder="Add Parameter" />
+            </div>
+
+            <!------------------------------ Select Abaqus version  ------------------------------------->
+            <div class="selectionBlock">
+                <label for="selectAbaqusVersion">Abaqus Version</label>
+                <div class="select is-warning">
+                    <select id="selectAbaqusVersion" class="submit_value">
+                        <option>Abaqus 2025</option>
+                        <option>Abaqus 2024</option>
+                        <option>Abaqus 2023</option>
+                        <option>Abaqus 2022</option>
+                    </select>
+                </div>
+            </div>
+
+            <!------------------------------ Delete restart files  ------------------------------------->
+            <div class="control selectionBlock">
+
+                <label for="deleteRestartFiles">Delete Restart Files</label>
+                <div id="deleteRestartFiles" style="display: flex;justify-content: space-around;">
+                    <label class="radio">
+                        <input value="true" type="radio" name="foobar" />
+                        Yes
+                    </label>
+                    <label class="radio">
+                        <input type="radio" name="foobar" checked />
+                        No
+                    </label>
+                </div>
+            </div>
+
+            <!------------------------------ Memory ----------------------------------->
+            <div class="selectionBlock">
+                <label for="memory">Memory [GB]</label>
+                <input id="memory" class="input is-warning, submit_value, number" type="text" value="8"
+                    placeholder="Default 8 GB" />
+                <div class="description">
+                    Max. <span style="color: blue;">220 GB</span> for <span style="color: blue;">Node 01, 02</span>;
+
+                    <span style="color: orange;"> 490 GB</span> for <span style="color: orange;">Node 03,
+                        04</span>;
+
+                    <span style="color: red;"> 670 GB</span> for <span style="color: red;">Node 08, 09</span>
+                </div>
+            </div>
+            <!------------------------------ Select Number of Kernels  ------------------------------------->
+            <div class="selectionBlock">
+                <label for="shared kernels">Shared Kernels</label>
+                <input id="shared kernels" class="input is-warning, submit_value, number" type="text" value="13"
+                    placeholder="Default 13 kernels" />
+                <div class="description">
+                    From 1 to 255 kernels of processor according to free licences
+                </div>
+            </div>
+            <!------------------------------ Preferred nodes  ------------------------------------->
+            <div class="selectionBlock">
+                <label for="preferred_nodes">Preferred Nodes</label>
+                <div class="select is-warning">
+                    <select id="preferred_nodes" class="submit_value">
+                        <option>Any</option>
+                        <option>prg-hpc-01</option>
+                        <option>prg-hpc-02 - for starccm</option>
+                        <option>prg-hpc-03</option>
+                        <option>prg-hpc-04</option>
+                        <option>prg-hpc-05</option>
+                        <option>prg-hpc-06</option>
+                        <option>prg-hpc-07</option>
+                        <option>prg-hpc-08</option>
+                        <option>prg-hpc-09 - for sw</option>
+
+                    </select>
+                </div>
+            </div>
+
+            <!------------------------------ Priority  ------------------------------------->
+            <div class="selectionBlock">
+                <label for="priority">Priority</label>
+                <div class="select is-warning">
+                    <select id="priority" class="submit_value">
+                        <option value="3">3 - normal</option>
+                        <option value="1">1 - 20 minutes (syntax check)</option>
+                        <option value="2">2 - high</option>
+                        <option value="4">4 - 60 minutes</option>
+                        <option value="5">5 - start at 20:00</option>
+                        <option value="7">7 - on cfd node 02</option>
+                        <option value="8">8 - weekend / low priority</option>
+                        <option value="9">9 - huge</option>
+                    </select>
+                </div>
+            </div>
+
+            <!------------------------------ Begin time  ------------------------------------->
+            <div class="selectionBlock">
+                <label for="begin time">Begin Time</label>
+                <input id="begin time" class="input is-warning, submit_value" value="now" type="text"
+                    placeholder="Default now" />
+                <div class="description">
+                    Now or time HH:MM, for example 5:00; or as a delay: now+36hour
+                </div>
+            </div>
+            <!------------------------------ Max. estimated time  ------------------------------------->
+            <div class="selectionBlock">
+                <label for="max. estimated time">Max. Estimated Time [h]</label>
+                <input id="max. estimated time" class="input is-warning, submit_value, number" value="8" type="text"
+                    placeholder="Default 8 hours" />
+                <div class="description">
+                    After this time the job <span style="color: red;">will be killed!</span>
+                </div>
+            </div>
+            <!------------------------------------------- Submit  --------------------------------------->
+            <div class="buttons selectionBlock">
+                <button id="submit" class="button is-warning">Submit Job to Queue</button>
+            </div>
+            <!------------------------------------------- Submit info  --------------------------------------->
+            <article class="message is-warning is-hidden" id="submit_info">
+                <div class="message-header">
+                    <p>Submit Info</p>
+                </div>
+                <div class="message-body">
+                    <div id="submit_info_content">
+
+                    </div>
+
+                    <div class="buttons" style="display: flex; justify-content: center;padding-top: 2rem; ">
+                        <button class="button is-warning" id="close_button_info">OK</button>
+                    </div>
+                </div>
+            </article>
+            <!---------------------------------------------------------------------------------->
+            <!------------------------------------JavaScript  ---------------------------------->
+            <!---------------------------------------------------------------------------------->
+
+            <script>
+                // list of files - in future from Python
+                InputFileList = ['my-test.json', 'users.py', '__pycache__', 'users_app.py', 'users_data.json'];
+
+
+
+                //---------------check button for deleting restart files------------------------------//
+                let deleteRestartFiles = false;
+                const check_buttons = document.querySelectorAll("#deleteRestartFiles input");
+                check_buttons.forEach(item => {
+                    item.addEventListener("change", e => {
+                        if (item.value === 'true')
+                            deleteRestartFiles = true;
+                        else (deleteRestartFiles = false);
+                    });
+                });
+
+
+                //-------------------- Creation of filelist of potencial input files ---------------//
+                let selected_input_file = null;
+                InputFileList.forEach((el, index) => {
+                    const item = document.getElementById("selectInputFile");
+                    const newListItem = document.createElement("option");
+                    newListItem.textContent = el;
+                    if (index === 0) {
+                        selected_input_file = newListItem.value
+                    }
+                    item.appendChild(newListItem);
+                })
+                const inputFile = document.getElementById("selectInputFile");
+                inputFile.addEventListener("change", e => {
+                    selected_input_file = inputFile.value;
+                });
+
+
+                // --------------------- Creation of dictionary for submit parameters------------------///
+
+                let submit_values_list = {};
+                const submit = document.getElementById("submit");
+                const input_list = document.querySelectorAll('.submit_value');
+                const values_for_check = document.querySelectorAll('.number');
+                const submit_info = document.getElementById("submit_info");
+                const close_button_info = document.getElementById("close_button_info");
+                const submit_info_content = document.getElementById('submit_info_content')
+                //const keys_for_input_check = ['estimated_time', 'memory', 'shared_kernels']
+
+
+                submit.addEventListener("click", e => {
+                    fill_input_values();
+                    submit_values_list.deleteRestartFiles = deleteRestartFiles;
+                    message_to_show = check_values();
+                    show_submit_info(message_to_show);
+                    hide_submit_info()
+                });
+
+                function check_values() {
+                    errors = [];
+                    values_for_check.forEach((item, index) => {
+                        if (item.value
+                            == "" || isNaN(Number(item.value))) {
+                            errors[index] = item.id;
+                        }
+                    })
+
+                    if (errors.length > 0) {
+                        errors.unshift("Error, following inputs must be numbers:");
+                        text = errors;
+                    }
+                    else {
+                        text = ['Task was submited.']
+                    }
+                    return text
+                };
+
+
+
+
+                function show_submit_info(text) {
+                    submit_info.classList.remove('is-hidden');
+                    text.forEach(item => {
+                        const newMessage = document.createElement('p');
+                        newMessage.textContent = item;
+                        submit_info_content.appendChild(newMessage);
+                    })
+
+                }
+
+                function hide_submit_info() {
+                    close_button_info.addEventListener("click", e => {
+                        submit_info.classList.add('is-hidden');
+                        submit_info_content.innerHTML = '';
+                    })
+                };
+
+
+                function fill_input_values() {
+                    input_list.forEach(item => {
+                        const key = item.id;
+                        const value = item.value;
+                        submit_values_list[key] = value;
+                    });
+
+                }
+
+            </script>
+        </div>
         <!------------------------------------------------------------------------------------------------>
         <!------------------------------ doughnut chart -------------------------------------------------->
         <!------------------------------------------------------------------------------------------------>
-        <a id="ls-dyna" class="panel-block is-hidden">
+        <div id="ls-dyna" class="panel-block is-hidden">
             <div>
                 <canvas style="min-height:600px; min-width: 600px;" id="doughnutChart"></canvas>
             </div>
@@ -140,11 +560,11 @@
             <script>
                 new Chart(doughnutChart, doughnutChart_config);
             </script>
-        </a>
+        </div>
         <!------------------------------------------------------------------------------------------------>
         <!------------------------------ polar chart2 ---------------------------------------------------->
         <!------------------------------------------------------------------------------------------------>
-        <a id="pamcrash" class="panel-block is-hidden">
+        <div id="pamcrash" class="panel-block is-hidden">
             <div>
                 <canvas style="min-height:600px; min-width: 600px;" id="polarChart"></canvas>
             </div>
@@ -152,7 +572,7 @@
             <script>
                 new Chart(polarChart, polarChart_config);
             </script>
-        </a>
+        </div>
         <!------------------------------------------------------------------------------------------------>
         <!------------------------------------------------------------------------------------------------>
         <!------------------------------------------------------------------------------------------------>
@@ -167,7 +587,7 @@
                 this.el = el;
                 const contentId = el.getAttribute('aria-controls');
                 this.content = document.getElementById(contentId);
-                //                this.charts = document.querySelectorAll(`#${contentId}  canvas`);
+
 
             }
             activate() {
@@ -178,9 +598,6 @@
                 this.el.classList.remove('is-active');
                 this.content.classList.add('is-hidden');
             };
-            //            drawGraph() {
-            //                return this.charts;
-            //            }
 
         };
 
@@ -194,15 +611,6 @@
                 activeTab.deactivate();
                 tab.activate();
                 activeTab = tab;
-
-                /*                 let charts = tab.drawGraph();
-                                   charts.forEach((el, index) => {
-                                   let chartConfig = `${el.id}_config`;
-                                   let chart_ID = `${el.id}`;
-                
-                                    const MyChart = new Chart(chart_ID, chartConfig);
-                                })
-                 */
             });
 
         })

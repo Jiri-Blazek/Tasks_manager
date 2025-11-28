@@ -12,11 +12,11 @@ const data_used_memory = {
         {
             label: 'Current used memory',
             data: rest_memory,
-            backgroundColor: 'rgb(54, 162, 235)',
+            backgroundColor: 'rgb(255, 205, 86)',
 
         },
         {
-            label: 'Available capacity',
+            label: 'Remaining memory',
             data: used_memory,
             borderColor: ' rgba(54, 162, 235, 0.2)',
         },

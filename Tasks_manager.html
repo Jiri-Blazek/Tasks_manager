@@ -69,6 +69,28 @@
 
 
         }
+
+        .table-button {
+            background-color: lightgrey;
+        }
+
+        #overview {
+            display: flex;
+            align-items: center;
+        }
+
+        td {
+            text-align: center;
+        }
+
+        tr {
+            text-align: center;
+        }
+
+        .chartArea {
+            display: flex;
+            flex-direction: row;
+        }
     </style>
 </head>
 
@@ -84,127 +106,168 @@
         </p>
         <script src="https://cdn.jsdelivr.net/npm/chart.js">
         </script>
-        <!------------------------------------------------------------------------------------------------>
-        <!------------------------------ bar chart ------------------------------------------------------->
-        <!------------------------------------------------------------------------------------------------>
-        <a id="overview" class="panel-block">
 
-            <table class="table is-bordered">
+        <!------------------------------------------------------------------------------------------------>
+        <!------------------------------ Table with running jobs------------------------------------------>
+        <!------------------------------------------------------------------------------------------------>
+
+        <div id="overview" class="panel-block">
+
+
+
+            <table class="table is-bordered" id="running_jobs_table">
                 <tbody>
 
                     <tr>
-                        <th class="is-link">Link th cell</th>
-                        <td>Two</td>
-                        <td class="is-link">Link td cell</td>
-                        <td>Four</td>
-                        <td>Five</td>
-                    </tr>
-                    <tr class="is-link">
-                        <th>Link row</th>
-                        <td>Two</td>
-                        <td>Three</td>
-                        <td>Four</td>
-                        <td>Five</td>
-                    </tr>
-
-                    <tr>
-                        <th class="is-primary">Primary th cell</th>
-                        <td>Two</td>
-                        <td class="is-primary">Primary td cell</td>
-                        <td>Four</td>
-                        <td>Five</td>
-                    </tr>
-                    <tr class="is-primary">
-                        <th>Primary row</th>
-                        <td>Two</td>
-                        <td>Three</td>
-                        <td>Four</td>
-                        <td>Five</td>
+                        <th class="is-warning"></th>
+                        <th class="is-warning"></th>
+                        <th class="is-warning">Job ID</th>
+                        <th class="is-warning">User
+                            <div class="select is-warning is-small">
+                                <select id="userFilter" style="max-width: 4rem; margin-left: 0.5rem;">
+                                    <option>All</option>
+                                </select>
+                            </div>
+                        </th>
+                        <th class="is-warning">Name</th>
+                        <th class="is-warning">State</th>
+                        <th class="is-warning">Priority </th>
+                        <th class="is-warning">Running time</th>
+                        <th class="is-warning">Start time</th>
+                        <th class="is-warning">Time limit</th>
+                        <th class="is-warning">CPUs</th>
+                        <th class="is-warning">Node</th>
+                        <th class="is-warning">Min. memory</th>
+                        <th class="is-warning">Nodelist</th>
                     </tr>
 
                     <tr>
-                        <th class="is-info">Info th cell</th>
-                        <td>Two</td>
-                        <td class="is-info">Info td cell</td>
-                        <td>Four</td>
-                        <td>Five</td>
-                    </tr>
-                    <tr class="is-info">
-                        <th>Info row</th>
-                        <td>Two</td>
-                        <td>Three</td>
-                        <td>Four</td>
-                        <td>Five</td>
-                    </tr>
-
-                    <tr>
-                        <th class="is-success">Success th cell</th>
-                        <td>Two</td>
-                        <td class="is-success">Success td cell</td>
-                        <td>Four</td>
-                        <td>Five</td>
-                    </tr>
-                    <tr class="is-success">
-                        <th>Success row</th>
-                        <td>Two</td>
-                        <td>Three</td>
-                        <td>Four</td>
-                        <td>Five</td>
+                        <td><button class="button is-small table-button">Get dir.</button></td>
+                        <td><button class="button is-small table-button">Kill</button></td>
+                        <td class="table_job_id">1921</td>
+                        <td class="table_user">Jiri</td>
+                        <td>Crash-front</td>
+                        <td>Running</td>
+                        <td>3</td>
+                        <td>0:25</td>
+                        <td>2025-11-27-16:25</td>
+                        <td>15:00:00</td>
+                        <td>16</td>
+                        <td>1</td>
+                        <td>250</td>
+                        <td>prg-hpc-01</td>
                     </tr>
 
                     <tr>
-                        <th class="is-warning">Warning th cell</th>
-                        <td>Two</td>
-                        <td class="is-warning">Warning td cell</td>
-                        <td>Four</td>
-                        <td>Five</td>
+                        <td><button class="button is-small table-button">Get dir.</button></td>
+                        <td><button class="button is-small table-button">Kill</button></td>
+                        <td>1921</td>
+                        <td class="table_user">Pavel</td>
+                        <td>Crash-rear</td>
+                        <td>Running</td>
+                        <td>3</td>
+                        <td>0:25</td>
+                        <td>2025-11-27-16:25</td>
+                        <td>15:00:00</td>
+                        <td>32</td>
+                        <td>1</td>
+                        <td>250</td>
+                        <td>prg-hpc-01</td>
                     </tr>
-                    <tr class="is-warning">
-                        <th>Warning row</th>
-                        <td>Two</td>
-                        <td>Three</td>
-                        <td>Four</td>
-                        <td>Five</td>
+                    <tr>
+                        <td><button class="button is-small table-button">Get dir.</button></td>
+                        <td><button class="button is-small table-button">Kill</button></td>
+                        <td>1921</td>
+                        <td class="table_user">Jiri</td>
+                        <td>Fatigue</td>
+                        <td>Running</td>
+                        <td>3</td>
+                        <td>0:25</td>
+                        <td>2025-11-27-16:25</td>
+                        <td>15:00:00</td>
+                        <td>32</td>
+                        <td>1</td>
+                        <td>250</td>
+                        <td>prg-hpc-01</td>
                     </tr>
 
-                    <tr>
-                        <th class="is-danger">Danger th cell</th>
-                        <td>Two</td>
-                        <td class="is-danger">Danger td cell</td>
-                        <td>Four</td>
-                        <td>Five</td>
-                    </tr>
-                    <tr class="is-danger">
-                        <th>Danger row</th>
-                        <td>Two</td>
-                        <td>Three</td>
-                        <td>Four</td>
-                        <td>Five</td>
-                    </tr>
+
 
                 </tbody>
             </table>
 
-            <div>
-                <canvas id="barChart"></canvas>
-            </div>
-            <script src="barChart.js"></script>
             <script>
-                new Chart(barChart, barChart_config);
+                const table_users = document.querySelectorAll(".table_user");
+                const userList = document.getElementById("userFilter")
+                const running_jobs_table = document.getElementById("running_jobs_table");
+                const table_rows = running_jobs_table.getElementsByTagName("tr");
+
+                generateUserList()
+
+                //-------------------- Creation of user list ---------------//
+                function generateUserList() {
+                    list_of_users = [];
+                    table_users.forEach((el, index) => {
+                        if (!list_of_users.includes(el.textContent)) {
+                            list_of_users[index] = el.textContent;
+                            //console.log(list_of_users)
+                            const newListItem = document.createElement("option");
+                            newListItem.textContent = el.textContent;
+                            userList.appendChild(newListItem);
+                        }
+                    })
+                }
+
+                //-------------------- Filter by user ---------------//
+                function filterTable() {
+                    const userValue = userList.value;
+
+                    for (let i = 1; i < table_rows.length; i++) {
+                        const cells = table_rows[i].querySelector(".table_user");
+                        const user = cells.textContent;
+
+                        let visible = true;
+
+                        if (userValue !== user && userValue !== 'All') {
+                            visible = false;
+                        }
+                        table_rows[i].style.display = visible ? "" : "none";
+                    }
+                }
+                userFilter.addEventListener("change", filterTable);
+
             </script>
             <!------------------------------------------------------------------------------------------------>
-            <!------------------------------ bar chart2 ------------------------------------------------------->
+            <!------------------------------  active table---------------------------------------------------->
             <!------------------------------------------------------------------------------------------------>
 
-            <div>
-                <canvas id="barChart2"></canvas>
-            </div>
-            <script src="barChart2.js"></script>
-            <script>
-                new Chart(barChart2, barChart2_config);
-            </script>
-            <div>
-                <canvas style="min-height:300px; min-width: 600px;" id="lineChart"></canvas>
+
+
+
+
+            <!------------------------------------------------------------------------------------------------>
+            <!------------------------------  Memory chart---------------------------------------------------->
+            <!------------------------------------------------------------------------------------------------>
+            <div class="chartArea">
+                <div>
+                    <canvas id="memory_chart"></canvas>
+                </div>
+                <script src="memory_chart.js"></script>
+                <script>
+                    new Chart(memory_chart, memory_chart_config);
+                </script>
+
+                <div>
+                    <canvas id="barChart"></canvas>
+                </div>
+                <script src="barChart.js"></script>
+                <script>
+                    new Chart(barChart, barChart_config);
+                </script>
+
+                <div>
+                    <canvas style="min-height:300px; min-width: 600px;" id="lineChart"></canvas>
+                </div>
             </div>
             <script src="lineChart.js"></script>
             <script>
@@ -213,7 +276,7 @@
                 //   b.update();
             </script>
 
-        </a>
+        </div>
         <!------------------------------------------------------------------------------------------------>
         <!---------------------------------- Abaqus ------------------------------------------------------>
         <!------------------------------------------------------------------------------------------------>
@@ -502,7 +565,7 @@
         <!------------------------------------------------------------------------------------------------>
         <!------------------------------ doughnut chart -------------------------------------------------->
         <!------------------------------------------------------------------------------------------------>
-        <a id="ls-dyna" class="panel-block is-hidden">
+        <div id="ls-dyna" class="panel-block is-hidden">
             <div>
                 <canvas style="min-height:600px; min-width: 600px;" id="doughnutChart"></canvas>
             </div>
@@ -511,11 +574,11 @@
             <script>
                 new Chart(doughnutChart, doughnutChart_config);
             </script>
-        </a>
+        </div>
         <!------------------------------------------------------------------------------------------------>
         <!------------------------------ polar chart2 ---------------------------------------------------->
         <!------------------------------------------------------------------------------------------------>
-        <a id="pamcrash" class="panel-block is-hidden">
+        <div id="pamcrash" class="panel-block is-hidden">
             <div>
                 <canvas style="min-height:600px; min-width: 600px;" id="polarChart"></canvas>
             </div>
@@ -523,7 +586,7 @@
             <script>
                 new Chart(polarChart, polarChart_config);
             </script>
-        </a>
+        </div>
         <!------------------------------------------------------------------------------------------------>
         <!------------------------------------------------------------------------------------------------>
         <!------------------------------------------------------------------------------------------------>

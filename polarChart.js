@@ -7,7 +7,7 @@ const data_polar = {
     datasets: [
         {
             label: 'Dataset 1',
-            data: [65, 59, 80, 81, 56],
+            data: [65, 59, 95, 81, 56],
             backgroundColor: ['#4BC0C0', '#36A2EB', '#FF6384', '#FF9F40', '#FFCD56'],
         },
     ]
