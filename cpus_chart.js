@@ -1,37 +1,37 @@
-const memory_chart = document.getElementById("memory_chart");
+const cpus_chart = document.getElementById("cpus_chart");
 
-max_memory = [220, 220, 490, 490, 670, 670];
-used_memory = [65, 59, 80, 81, 400, 55];
-rest_memory = max_memory.map((x, i) => x - used_memory[i]);
+max_cpus = [100, 200, 100, 100, 50, 50];
+used_cpus = [65, 59, 80, 81, 40, 49];
+rest_cpus = max_cpus.map((x, i) => x - used_cpus[i]);
 
-const labels_memory = ['Node 01', 'Node 02', 'Node 03', 'Node 04', 'Node 08', 'Node 09'];
+const labels_cpus = ['Node 01', 'Node 02', 'Node 03', 'Node 04', 'Node 08', 'Node 09'];
 
-const data_used_memory = {
-    labels: labels_memory,
+const data_used_cpus = {
+    labels: labels_cpus,
     datasets: [
         {
-            label: 'Current used memory',
-            data: rest_memory,
+            label: 'Current used CPUs',
+            data: rest_cpus,
             backgroundColor: '#FFB70F',
 
         },
         {
-            label: 'Remaining memory',
-            data: used_memory,
+            label: 'Remaining CPUs',
+            data: used_cpus,
             borderColor: ' rgba(54, 162, 235, 0.2)',
         },
     ]
 };
 
 
-const memory_chart_config = {
+const cpus_chart_config = {
     type: 'bar',
-    data: data_used_memory,
+    data: data_used_cpus,
     options: {
         plugins: {
             title: {
                 display: true,
-                text: 'Used memory',
+                text: 'Used CPUs',
                 font: {
                     size: 18,
                     weight: 'bold'

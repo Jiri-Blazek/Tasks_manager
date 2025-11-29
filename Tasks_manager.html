@@ -58,9 +58,7 @@
             min-width: 60rem;
         }
 
-
-        #submit_info {
-
+        .info {
             position: absolute;
             top: 50%;
             left: 50%;
@@ -79,17 +77,25 @@
             align-items: center;
         }
 
-        td {
-            text-align: center;
-        }
-
+        td,
         tr {
             text-align: center;
         }
 
+
         .chartArea {
             display: flex;
-            flex-direction: row;
+            justify-content: space-around;
+        }
+
+        .tableHead {
+            background-color: lightgray;
+        }
+
+        #runningJobsTable,
+        .chartArea {
+            width: max-content;
+            width: 100%;
         }
     </style>
 </head>
@@ -115,101 +121,117 @@
 
 
 
-            <table class="table is-bordered" id="running_jobs_table">
+            <table class="table is-bordered" id="runningJobsTable">
                 <tbody>
 
-                    <tr>
-                        <th class="is-warning"></th>
-                        <th class="is-warning"></th>
-                        <th class="is-warning">Job ID</th>
-                        <th class="is-warning">User
+                    <tr class="tableHead">
+                        <th></th>
+                        <th></th>
+                        <th>Job ID</th>
+                        <th>User
                             <div class="select is-warning is-small">
-                                <select id="userFilter" style="max-width: 4rem; margin-left: 0.5rem;">
+                                <select id="userFilter"
+                                    style="max-width: 4rem; margin-left: 0.5rem;border-color: lightgray;">
                                     <option>All</option>
                                 </select>
                             </div>
                         </th>
-                        <th class="is-warning">Name</th>
-                        <th class="is-warning">State</th>
-                        <th class="is-warning">Priority </th>
-                        <th class="is-warning">Running time</th>
-                        <th class="is-warning">Start time</th>
-                        <th class="is-warning">Time limit</th>
-                        <th class="is-warning">CPUs</th>
-                        <th class="is-warning">Node</th>
-                        <th class="is-warning">Min. memory</th>
-                        <th class="is-warning">Nodelist</th>
+                        <th>Name</th>
+                        <th>State</th>
+                        <th>Priority </th>
+                        <th>Running time</th>
+                        <th>Start time</th>
+                        <th>Time limit</th>
+                        <th>CPUs</th>
+                        <th>Node</th>
+                        <th>Min. memory</th>
+                        <th>Nodelist</th>
+                    </tr>
+                    <tr>
+                        <td><button class="button is-small table-button getDir">Get dir.</button></td>
+                        <td><button class="button is-small table-button killJob">Kill</button></td>
+                        <td class="tableJobID">1155</td>
+                        <td class="tableUser">Jiri</td>
+                        <td class="tableName">Crash-front</td>
+                        <td class="state">Running</td>
+                        <td class="priority">3</td>
+                        <td class="runningTime">0:25</td>
+                        <td class="startTime">2025-11-27-16:25</td>
+                        <td class="timeLimit">15:00:00</td>
+                        <td class="cpus">16</td>
+                        <td class="node">1</td>
+                        <td class="minMemory">250</td>
+                        <td class="nodeList">prg-hpc-01</td>
                     </tr>
 
                     <tr>
-                        <td><button class="button is-small table-button">Get dir.</button></td>
-                        <td><button class="button is-small table-button">Kill</button></td>
-                        <td class="table_job_id">1921</td>
-                        <td class="table_user">Jiri</td>
-                        <td>Crash-front</td>
-                        <td>Running</td>
-                        <td>3</td>
-                        <td>0:25</td>
-                        <td>2025-11-27-16:25</td>
-                        <td>15:00:00</td>
-                        <td>16</td>
-                        <td>1</td>
-                        <td>250</td>
-                        <td>prg-hpc-01</td>
+                        <td><button class="button is-small table-button getDir">Get dir.</button></td>
+                        <td><button class="button is-small table-button killJob">Kill</button></td>
+                        <td class="tableJobID">15</td>
+                        <td class="tableUser">Jiri</td>
+                        <td class="tableName">Crash-side</td>
+                        <td class="state">Running</td>
+                        <td class="priority">3</td>
+                        <td class="runningTime">0:25</td>
+                        <td class="startTime">2025-11-27-16:25</td>
+                        <td class="timeLimit">15:00:00</td>
+                        <td class="cpus">16</td>
+                        <td class="node">1</td>
+                        <td class="minMemory">250</td>
+                        <td class="nodeList">prg-hpc-01</td>
                     </tr>
 
                     <tr>
-                        <td><button class="button is-small table-button">Get dir.</button></td>
-                        <td><button class="button is-small table-button">Kill</button></td>
-                        <td>1921</td>
-                        <td class="table_user">Pavel</td>
-                        <td>Crash-rear</td>
-                        <td>Running</td>
-                        <td>3</td>
-                        <td>0:25</td>
-                        <td>2025-11-27-16:25</td>
-                        <td>15:00:00</td>
-                        <td>32</td>
-                        <td>1</td>
-                        <td>250</td>
-                        <td>prg-hpc-01</td>
+                        <td><button class="button is-small table-button getDir">Get dir.</button></td>
+                        <td><button class="button is-small table-button killJob">Kill</button></td>
+                        <td class="tableJobID">1821</td>
+                        <td class="tableUser">Pavel</td>
+                        <td class="tableName">Crash-rear</td>
+                        <td class="tableState">Running</td>
+                        <td class="tablePriority">3</td>
+                        <td class="tableRunningTime">0:25</td>
+                        <td class="tableStartTime">2025-11-27-16:25</td>
+                        <td class="tableTimeLimit">15:00:00</td>
+                        <td class="tableCpus">16</td>
+                        <td class="tableNode">1</td>
+                        <td class="tableMinMemory">250</td>
+                        <td class="tableNodeList">prg-hpc-01</td>
                     </tr>
-                    <tr>
-                        <td><button class="button is-small table-button">Get dir.</button></td>
-                        <td><button class="button is-small table-button">Kill</button></td>
-                        <td>1921</td>
-                        <td class="table_user">Jiri</td>
-                        <td>Fatigue</td>
-                        <td>Running</td>
-                        <td>3</td>
-                        <td>0:25</td>
-                        <td>2025-11-27-16:25</td>
-                        <td>15:00:00</td>
-                        <td>32</td>
-                        <td>1</td>
-                        <td>250</td>
-                        <td>prg-hpc-01</td>
-                    </tr>
-
 
 
                 </tbody>
             </table>
 
+            <article class="message is-warning is-hidden info" id="killJobInfo">
+                <div class="message-header">
+                    <p>Info</p>
+                </div>
+                <div class="message-body">
+                    <div id="killContent">
+
+                    </div>
+                    <div class="buttons" style="display: flex; justify-content: center;padding-top: 2rem; ">
+
+                        <button class="button is-warning" id="yesButton">YES</button>
+                        <button class="button is-warning" id="cancelButton">NO</button>
+                    </div>
+                </div>
+            </article>
+
             <script>
-                const table_users = document.querySelectorAll(".table_user");
+                const tableUsers = document.querySelectorAll(".tableUser");
                 const userList = document.getElementById("userFilter")
-                const running_jobs_table = document.getElementById("running_jobs_table");
-                const table_rows = running_jobs_table.getElementsByTagName("tr");
+                const runningJobsTable = document.getElementById("runningJobsTable");
+                const tableRows = runningJobsTable.getElementsByTagName("tr");
 
                 generateUserList()
 
                 //-------------------- Creation of user list ---------------//
                 function generateUserList() {
-                    list_of_users = [];
-                    table_users.forEach((el, index) => {
-                        if (!list_of_users.includes(el.textContent)) {
-                            list_of_users[index] = el.textContent;
+                    usersList = [];
+                    tableUsers.forEach((el, index) => {
+                        if (!usersList.includes(el.textContent)) {
+                            usersList[index] = el.textContent;
                             //console.log(list_of_users)
                             const newListItem = document.createElement("option");
                             newListItem.textContent = el.textContent;
@@ -222,8 +244,8 @@
                 function filterTable() {
                     const userValue = userList.value;
 
-                    for (let i = 1; i < table_rows.length; i++) {
-                        const cells = table_rows[i].querySelector(".table_user");
+                    for (let i = 1; i < tableRows.length; i++) {
+                        const cells = tableRows[i].querySelector(".tableUser");
                         const user = cells.textContent;
 
                         let visible = true;
@@ -231,19 +253,66 @@
                         if (userValue !== user && userValue !== 'All') {
                             visible = false;
                         }
-                        table_rows[i].style.display = visible ? "" : "none";
+                        tableRows[i].style.display = visible ? "" : "none";
                     }
                 }
                 userFilter.addEventListener("change", filterTable);
 
+
+                //-------------------- Kill job ---------------//
+
+                const allKillJobButtons = document.querySelectorAll('.killJob');
+                const allGetDirButtons = document.querySelectorAll('.getDir');
+                const allTableButtons = document.querySelectorAll('#runningJobsTable button');
+                const killJobInfo = document.getElementById("killJobInfo");
+                const killContent = document.getElementById("killContent");
+                const yesButton = document.getElementById("yesButton");
+                const cancelButton = document.getElementById("cancelButton");
+
+                //-------------------- all ---------------//
+                allTableButtons.forEach((item, index) => {
+                    item.addEventListener('click', e => {
+                        jobId = item.closest('tr').children[2].innerText;
+                        if (item.classList.contains("killJob")) {
+                            answer = killJobWarning(jobId)
+                        }
+                        else {
+                            getDir(jobId)
+                        }
+                    });
+                })
+                function killJobWarning(jobId) {
+                    answer = false;
+                    //console.log('killnu job ' + jobId);
+                    killJobInfo.classList.remove('is-hidden');
+                    const newMessage = document.createElement('p');
+                    newMessage.textContent = 'Do you really want to kill job with ID ' + jobId + '?';
+                    killContent.appendChild(newMessage);
+                    answer = hideWarning();
+                    return answer
+                }
+                function getDir(jobId) {
+                    console.log('otevru slozku jobu ' + jobId)
+                }
+
+                function hideWarning() {
+                    cancelButton.addEventListener("click", e => {
+                        killJobInfo.classList.add('is-hidden');
+                        killContent.innerHTML = '';
+                        return false
+                    });
+                    yesButton.addEventListener("click", e => {
+                        killJobInfo.classList.add('is-hidden');
+                        killContent.innerHTML = '';
+                        return true
+                    });
+                };
+
+
+
+
+
             </script>
-            <!------------------------------------------------------------------------------------------------>
-            <!------------------------------  active table---------------------------------------------------->
-            <!------------------------------------------------------------------------------------------------>
-
-
-
-
 
             <!------------------------------------------------------------------------------------------------>
             <!------------------------------  Memory chart---------------------------------------------------->
@@ -252,11 +321,17 @@
                 <div>
                     <canvas id="memory_chart"></canvas>
                 </div>
+                <div>
+                    <canvas id="cpus_chart"></canvas>
+                </div>
+
+                <script src="cpus_chart.js"></script>
                 <script src="memory_chart.js"></script>
                 <script>
                     new Chart(memory_chart, memory_chart_config);
+                    new Chart(cpus_chart, cpus_chart_config);
                 </script>
-
+                <!--
                 <div>
                     <canvas id="barChart"></canvas>
                 </div>
@@ -264,7 +339,7 @@
                 <script>
                     new Chart(barChart, barChart_config);
                 </script>
-
+                
                 <div>
                     <canvas style="min-height:300px; min-width: 600px;" id="lineChart"></canvas>
                 </div>
@@ -275,7 +350,8 @@
                 //   b.resize();
                 //   b.update();
             </script>
-
+-->
+            </div>
         </div>
         <!------------------------------------------------------------------------------------------------>
         <!---------------------------------- Abaqus ------------------------------------------------------>
@@ -437,21 +513,23 @@
             <div class="buttons selectionBlock">
                 <button id="submit" class="button is-warning">Submit Job to Queue</button>
             </div>
-            <!------------------------------------------- Submit info  --------------------------------------->
-            <article class="message is-warning is-hidden" id="submit_info">
+            <!-------------------------------------------Submit info  --------------------------------------->
+            <article class="message is-warning is-hidden info" id="submitInfo">
                 <div class="message-header">
-                    <p>Submit Info</p>
+                    <p>Submit info</p>
                 </div>
                 <div class="message-body">
-                    <div id="submit_info_content">
-
+                    <div id="submitInfoContent">
                     </div>
-
                     <div class="buttons" style="display: flex; justify-content: center;padding-top: 2rem; ">
-                        <button class="button is-warning" id="close_button_info">OK</button>
+                        <button class="button is-warning" id="closeButton">OK</button>
+
                     </div>
                 </div>
             </article>
+
+
+
             <!---------------------------------------------------------------------------------->
             <!------------------------------------JavaScript  ---------------------------------->
             <!---------------------------------------------------------------------------------->
@@ -474,7 +552,7 @@
                 });
 
 
-                //-------------------- Creation of filelist of potencial input files ---------------//
+                //-------------------- Creation of file list of potencial input files ---------------//
                 let selected_input_file = null;
                 InputFileList.forEach((el, index) => {
                     const item = document.getElementById("selectInputFile");
@@ -493,27 +571,27 @@
 
                 // --------------------- Creation of dictionary for submit parameters------------------///
 
-                let submit_values_list = {};
+                let submitValuesList = {};
                 const submit = document.getElementById("submit");
-                const input_list = document.querySelectorAll('.submit_value');
-                const values_for_check = document.querySelectorAll('.number');
-                const submit_info = document.getElementById("submit_info");
-                const close_button_info = document.getElementById("close_button_info");
-                const submit_info_content = document.getElementById('submit_info_content')
+                const inputList = document.querySelectorAll('.submit_value');
+                const valuesForCheck = document.querySelectorAll('.number');
+                const submitInfo = document.getElementById("submitInfo");
+                const closeButton = document.getElementById("closeButton");
+                const submitInfoContent = document.getElementById('submitInfoContent')
                 //const keys_for_input_check = ['estimated_time', 'memory', 'shared_kernels']
 
 
                 submit.addEventListener("click", e => {
-                    fill_input_values();
-                    submit_values_list.deleteRestartFiles = deleteRestartFiles;
-                    message_to_show = check_values();
-                    show_submit_info(message_to_show);
-                    hide_submit_info()
+                    fillInputValues();
+                    submitValuesList.deleteRestartFiles = deleteRestartFiles;
+                    messageToShow = checkValues();
+                    showSubmitInfo(messageToShow);
+                    hideInfo()
                 });
 
-                function check_values() {
+                function checkValues() {
                     errors = [];
-                    values_for_check.forEach((item, index) => {
+                    valuesForCheck.forEach((item, index) => {
                         if (item.value
                             == "" || isNaN(Number(item.value))) {
                             errors[index] = item.id;
@@ -530,40 +608,40 @@
                     return text
                 };
 
-
-
-
-                function show_submit_info(text) {
-                    submit_info.classList.remove('is-hidden');
-                    text.forEach(item => {
-                        const newMessage = document.createElement('p');
-                        newMessage.textContent = item;
-                        submit_info_content.appendChild(newMessage);
-                    })
-
-                }
-
-                function hide_submit_info() {
-                    close_button_info.addEventListener("click", e => {
-                        submit_info.classList.add('is-hidden');
-                        submit_info_content.innerHTML = '';
-                    })
-                };
-
-
-                function fill_input_values() {
-                    input_list.forEach(item => {
+                function fillInputValues() {
+                    inputList.forEach(item => {
                         const key = item.id;
                         const value = item.value;
-                        submit_values_list[key] = value;
+                        submitValuesList[key] = value;
                     });
 
                 }
 
+                function showSubmitInfo(text) {
+                    submitInfo.classList.remove('is-hidden');
+                    text.forEach(item => {
+                        const newMessage = document.createElement('p');
+                        newMessage.textContent = item;
+                        submitInfoContent.appendChild(newMessage);
+                    })
+
+                }
+
+                function hideInfo() {
+                    closeButton.addEventListener("click", e => {
+                        submitInfo.classList.add('is-hidden');
+                        submitInfoContent.innerHTML = '';
+                    })
+                };
+
+
+
+
+
             </script>
         </div>
         <!------------------------------------------------------------------------------------------------>
-        <!------------------------------ doughnut chart -------------------------------------------------->
+        <!------------------------------ LS Dyna -------------------------------------------------->
         <!------------------------------------------------------------------------------------------------>
         <div id="ls-dyna" class="panel-block is-hidden">
             <div>
@@ -576,7 +654,7 @@
             </script>
         </div>
         <!------------------------------------------------------------------------------------------------>
-        <!------------------------------ polar chart2 ---------------------------------------------------->
+        <!------------------------------ Pamcrash ---------------------------------------------------->
         <!------------------------------------------------------------------------------------------------>
         <div id="pamcrash" class="panel-block is-hidden">
             <div>
@@ -628,6 +706,8 @@
             });
 
         })
+
+
 
     </script>
 
